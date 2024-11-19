@@ -18,6 +18,12 @@ const User=new mongoose.Schema({
     },
     Profilepicture:{
         type:String
+    },
+    otp:{
+        type:String
+    },
+    otpExpires:{
+        type:Date
     }
 })
 

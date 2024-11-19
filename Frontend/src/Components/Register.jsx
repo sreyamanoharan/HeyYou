@@ -2,6 +2,7 @@ import { TextField, Button } from '@mui/material';
 import axios from '../axios'
 import { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 function Register() {
@@ -26,15 +27,16 @@ function Register() {
   })
   const [err, setErr] = useState({})
 
-  const regex_password = /^(?=.*?[A-Z])(?=.*[a-z])(?=.*[0-9]){8,16}/
+  const navigate=useNavigate()
+
+  const regex_password = /^(?=.*[a-z])(?=.*[0-9]){5,12}/
   const regex_mobile = /^\d{10}$/
   const nameRegex = /^[a-zA-Z]+$/
   function singUp(e) {
     e.preventDefault();
 
-    const errors = {}; // Create an object to hold error messages for each field
+    const errors = {}; 
 
-    // Check for empty fields
     if (!user.Name.trim()) {
       errors.Name = 'Name is required.';
     } else if (!nameRegex.test(user.Name)) {
@@ -63,12 +65,11 @@ function Register() {
       errors.ConfirmPassword = 'Passwords do not match.';
     }
 
-    // If errors object has any error message, set it to the state and stop submission
     if (Object.keys(errors).length > 0) {
-      setErr(errors); // Set errors for each field
+      setErr(errors); 
     } else {
-      setErr({}); // Clear errors if no validation issues
-      handleSubmit(); // Proceed to submit if validation passes
+      setErr({}); 
+      handleSubmit(); 
     }
   }
 
@@ -117,8 +118,17 @@ function Register() {
     })
 
     setUser(initialState);
+    generateOtp(user.Email)
 
 
+  }
+
+  const generateOtp=async(Email)=>{
+   await axios.post('/generate-otp',{Email}).then((res)=>{
+    if(res.status==200){
+      navigate('/verify-otp',{state:{email:user.Email}})
+    }
+   })
   }
 
 
