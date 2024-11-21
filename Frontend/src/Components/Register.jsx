@@ -1,41 +1,30 @@
 import { TextField, Button } from '@mui/material';
-import axios from '../axios'
+import axios from '../axios';
 import { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-
 function Register() {
-
   const initialState = {
     Name: '',
     Email: '',
     Password: '',
     ConfirmPassword: '',
     ProfilePicture: '',
-    PhoneNumber: ''
+    PhoneNumber: '',
   };
 
-  const [user, setUser] = useState({
-    Name: '',
-    Email: '',
-    Password: '',
-    ConfirmPassword: '',
-    ProfilePicture: '',
-    PhoneNumber: ''
+  const [user, setUser] = useState(initialState);
+  const [err, setErr] = useState({});
+  const navigate = useNavigate();
 
-  })
-  const [err, setErr] = useState({})
+  const regex_password = /^(?=.*[a-z])(?=.*[0-9]){5,12}/;
+  const regex_mobile = /^\d{10}$/;
+  const nameRegex = /^[a-zA-Z]+$/;
 
-  const navigate=useNavigate()
-
-  const regex_password = /^(?=.*[a-z])(?=.*[0-9]){5,12}/
-  const regex_mobile = /^\d{10}$/
-  const nameRegex = /^[a-zA-Z]+$/
   function singUp(e) {
     e.preventDefault();
-
-    const errors = {}; 
+    const errors = {};
 
     if (!user.Name.trim()) {
       errors.Name = 'Name is required.';
@@ -66,78 +55,59 @@ function Register() {
     }
 
     if (Object.keys(errors).length > 0) {
-      setErr(errors); 
+      setErr(errors);
     } else {
-      setErr({}); 
-      handleSubmit(); 
+      setErr({});
+      handleSubmit();
     }
   }
-
 
   const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    const file = e.target.files[0]
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'HeyYou');
+    data.append('cloud_name', 'ds0dvm4ol');
 
-
-    if (!file) return
-
-    const data = new FormData()
-    data.append("file", file)
-    data.append("upload_preset", "HeyYou")
-    data.append("cloud_name", "ds0dvm4ol")
-
-    const res = await fetch("https://api.cloudinary.com/v1_1/ds0dvm4ol/image/upload", {
+    const res = await fetch('https://api.cloudinary.com/v1_1/ds0dvm4ol/image/upload', {
       method: 'POST',
-      body: data
-    })
+      body: data,
+    });
 
-    const uploadedImgUrl = await res.json()
-
-
-    setUser({ ...user, ProfilePicture: uploadedImgUrl.url })
-
-  }
-
-
+    const uploadedImgUrl = await res.json();
+    setUser({ ...user, ProfilePicture: uploadedImgUrl.url });
+  };
 
   const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
 
-    e.preventDefault()
-    setUser({ ...user, [e.target.name]: e.target.value })
-
-
-  }
-
-
-  const handleSubmit = async (req, res) => {
-
+  const handleSubmit = async () => {
     await axios.post('/register', user).then((res) => {
-      console.log(res.data);
       toast.success(res.data.message);
-
-    })
-
+    });
     setUser(initialState);
-    generateOtp(user.Email)
+    generateOtp(user.Email);
+  };
 
-
-  }
-
-  const generateOtp=async(Email)=>{
-   await axios.post('/generate-otp',{Email}).then((res)=>{
-    if(res.status==200){
-      navigate('/verify-otp',{state:{email:user.Email}})
-    }
-   })
-  }
-
-
+  const generateOtp = async (Email) => {
+    await axios.post('/generate-otp', { Email }).then((res) => {
+      if (res.status === 200) {
+        navigate('/verify-otp', { state: { email: user.Email } });
+      }
+    });
+  };
 
   return (
     <>
       <Toaster toastOptions={{ duration: 3000 }} />
       <form onSubmit={singUp}>
-        <div className="max-w-md mx-auto p-8 bg-white shadow-lg rounded-lg">
+        <div
+          className="max-w-md mx-auto p-8 shadow-lg rounded-lg"
+          style={{ backgroundColor: 'black', color: 'white' }}
+        >
           <h2 className="text-2xl font-bold mb-6 text-center">Register here</h2>
 
           <TextField
@@ -150,6 +120,9 @@ function Register() {
             onChange={handleChange}
             error={!!err.Name}
             helperText={err.Name}
+            InputProps={{
+              style: { backgroundColor: 'grey', color: 'white' },
+            }}
           />
 
           <TextField
@@ -163,6 +136,9 @@ function Register() {
             onChange={handleChange}
             error={!!err.Email}
             helperText={err.Email}
+            InputProps={{
+              style: { backgroundColor: 'grey', color: 'white' },
+            }}
           />
 
           <TextField
@@ -176,6 +152,9 @@ function Register() {
             onChange={handleChange}
             error={!!err.Password}
             helperText={err.Password}
+            InputProps={{
+              style: { backgroundColor: 'grey', color: 'white' },
+            }}
           />
 
           <TextField
@@ -189,6 +168,9 @@ function Register() {
             onChange={handleChange}
             error={!!err.ConfirmPassword}
             helperText={err.ConfirmPassword}
+            InputProps={{
+              style: { backgroundColor: 'grey', color: 'white' },
+            }}
           />
 
           <TextField
@@ -202,6 +184,9 @@ function Register() {
             onChange={handleChange}
             error={!!err.PhoneNumber}
             helperText={err.PhoneNumber}
+            InputProps={{
+              style: { backgroundColor: 'grey', color: 'white' },
+            }}
           />
 
           <div className="flex flex-col items-center mb-6">
@@ -221,14 +206,17 @@ function Register() {
             </label>
           </div>
 
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ backgroundColor: 'red', color: 'white' }}
+            fullWidth
+          >
             Sign Up
           </Button>
         </div>
       </form>
-
     </>
-
   );
 }
 

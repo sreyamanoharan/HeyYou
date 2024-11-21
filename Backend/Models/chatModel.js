@@ -7,13 +7,13 @@ const chatSchema=mongoose.Schema({
     },
     isGroupChat:{
           type:Boolean,
-          default:true
+          default:false
     },
-    users:{
+    users:[{
         type:mongoose.Schema.Types.ObjectId,
-        ref:User
+        ref:"User"
 
-    },
+    }],
     latestMessage:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Message"

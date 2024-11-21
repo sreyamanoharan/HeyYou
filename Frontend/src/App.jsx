@@ -3,21 +3,28 @@ import Register from './Components/Register'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Login from './Components/Login'
 import Home from './Components/Home'
-import VerifyOtp from './Components/verifyOtp'
+import VerifyOtp from './Components/VerifyOtp'
+import Chat from './Components/Chat'
+import ChatProvider from './Context/ChatProvider'
 
 function App() {
 
 
   return (
     <>
+   
     <Router>
+    <ChatProvider>
       <Routes>
         <Route path='/register' element={ <Register/>}/>
         <Route path='/login' element={ <Login/>}/>
         <Route path='/' element={ <Home/>}/>
         <Route path='/verify-otp' element={ <VerifyOtp/>}/>
+        <Route path='/chats' element={ <Chat/>}/>
       </Routes>
+      </ChatProvider>
     </Router>
+ 
     </>
   )
 }

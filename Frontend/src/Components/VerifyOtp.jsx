@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import axios from '../axios'
 
 const VerifyOtp = () => {
   const [otp,setOtp]=useState('')
 
   const location=useLocation()
+
+  const Navigate=useNavigate()
   let email=location.state?.email
   console.log(email);
   

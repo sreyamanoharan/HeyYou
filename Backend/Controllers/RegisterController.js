@@ -1,6 +1,7 @@
 import UserModel from "../Models/RegisterModel.js";
 import crypto from 'crypto'
 import { sendOtp } from "../utils/sendMail.js";
+import { generateToken } from '../MiddleWares/Auth.js'
 
 export const userRegister=async (req,res)=>{
     const {Name,Email,PhoneNumber,Password,ConfirmPassword,ProfilePicture}=req.body
@@ -32,11 +33,7 @@ try {
    return res.status(500).json({message:error.message});
     
 }
-
-
-
-   
-    
+  
 }
 
 export const generateOtp=async(req,res)=>{
@@ -48,6 +45,8 @@ console.log(req.body);
     try {
         
     const {Email}=req.body
+    console.log('===generate otp=========');
+    
 
     const user=await UserModel.findOne({Email})
     console.log(user);
@@ -107,7 +106,7 @@ export const login=async(req,res)=>{
     await UserModel.findOne({Email:Email}).then((user)=>{
         if(user){
             if(user.Password===password){
-                res.json("success")
+                res.status(201).json({token:generateToken(user._id),userId:user._id})
             }
             else{
                 res.json("the password is incorrect")
@@ -117,7 +116,27 @@ export const login=async(req,res)=>{
         }
     })
  
-    
+
    
 
 }
+
+export const allUsers=async(req,res)=>{
+    console.log(req.query.search,'hhhheeellllooooooooooooooooooooooooooo-------------------');
+    
+    const keyword=req.query.search ? {
+        $or: [
+            {Name: { $regex: req.query.search ,$options:"i"}},
+            {Email:{ $regex: req.query.search ,$options:"i"}}
+        ]
+    }:{};
+  console.log(keyword);
+  
+ const users= await UserModel.find(keyword).find({_id:{$ne:req.user._id}})
+ console.log(users);
+ 
+ res.send(users)
+
+}
+
+

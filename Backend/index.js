@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import userRouter from './Routers/UserRoutes.js'
+import chatRouter from './Routers/ChatRoutes.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -17,6 +18,7 @@ app.use(express.json())
 const PORT=3000
 
 app.use('/',userRouter)
+app.use('/chat',chatRouter)
 
 
 mongoose.connect("mongodb://localhost:27017/HeyYou").then((res)=>{

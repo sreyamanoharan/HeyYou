@@ -13,7 +13,12 @@ const Login = () => {
     e.preventDefault()
       await axios.post('/login',{email,password}).then((res)=>{
         console.log(res.data);
-        if(res.data==="success"){
+        console.log(res.status,'statussssssssss');
+        
+        if(res.status=="201"){
+         console.log(res.data.token);
+         localStorage.setItem("userInfo", JSON.stringify(res.data.token));
+
          Navigate('/')
         }
         
