@@ -22,7 +22,7 @@ const chatSchema=mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId
     }
 },
-{timesttamps:true}
+{timestamps:true}
 );
 
 

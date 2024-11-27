@@ -11,7 +11,7 @@ return token
 export const VerifyToken=async(req,res,next)=>{
     try {
         let token=req.headers.authorization
-        console.log(token);
+      
         
             
         if(!token){
@@ -24,18 +24,16 @@ export const VerifyToken=async(req,res,next)=>{
             token=token.slice(7,token.length).trimLeft()
             
         }
-  console.log(token);
+
   
         const verified=jwt.verify(token,process.env.JWT_SECRET)
         
        const user=await Users.findOne({_id:verified.userId})
-       console.log(user); // If you want the result as a plain JavaScript object
+   
 
-// If you specifically want to access the _id as a string
 
 
        req.user=user
-         console.log(req.user,verified,'yyyyyaaaaaaaaaaaaaaaaaaaaaayyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
          
         
         req.payload={verified,user}

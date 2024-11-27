@@ -1,6 +1,7 @@
 import axios from '../axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
 
@@ -13,11 +14,12 @@ const Login = () => {
     e.preventDefault()
       await axios.post('/login',{email,password}).then((res)=>{
         console.log(res.data);
-        console.log(res.status,'statussssssssss');
+       const {user ,token}=res.data
         
         if(res.status=="201"){
          console.log(res.data.token);
-         localStorage.setItem("userInfo", JSON.stringify(res.data.token));
+         localStorage.setItem('userInfo', JSON.stringify(user));
+         localStorage.setItem('token', token);
 
          Navigate('/')
         }
@@ -34,6 +36,9 @@ const Login = () => {
       <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
       <label htmlFor="">Password</label>
       <button onClick={handleSubmit}>login</button>
+
+      <p>dont have an account, please register</p>
+     <button> <Link to={'/register'}>Register here</Link></button>
     </>
   )
 }

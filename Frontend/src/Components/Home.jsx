@@ -8,17 +8,17 @@ const Home = () => {
   const navigate=useNavigate()
 
   useEffect(()=>{
-    const user=JSON.parse(localStorage.getItem("userInfo"))
+    const token=localStorage.getItem("token")
 
-    if(user){
+    if(token){
         navigate('/chats')
     }
 },[navigate])
 
 
-//  useEffect(()=>{
-//    axios.post('/chat/create-chat')
-//  })
+ useEffect(()=>{
+   axios.post('/chat/create-chat')
+ })
  
 
  const logout=()=>{
