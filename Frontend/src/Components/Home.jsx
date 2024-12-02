@@ -4,32 +4,30 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Home = () => {
-
+ 
   const navigate=useNavigate()
 
   useEffect(()=>{
-    const token=localStorage.getItem("token")
+    // const token=localStorage.getItem("token")
+    const user=JSON.parse(localStorage.getItem("userInfo"))
 
-    if(token){
+
+      console.log(user,'homepage user....');
+      
+    if(user){
         navigate('/chats')
     }
-},[navigate])
+},[navigate])  
 
 
- useEffect(()=>{
-   axios.post('/chat/create-chat')
- })
+//  useEffect(()=>{
+//    axios.post('/chat/create-chat')
+//  })
  
 
- const logout=()=>{
-  localStorage.removeItem('token')
-  navigate('/login')
- }
-  
   return (
     <div>
-      <p>hellooo</p>
-      <button style={{color:'red'}} onClick={logout}>logout</button>
+     
     </div>
   )
 }

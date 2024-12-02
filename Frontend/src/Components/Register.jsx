@@ -3,6 +3,8 @@ import axios from '../axios';
 import { useState } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+
 
 function Register() {
   const initialState = {
@@ -10,7 +12,7 @@ function Register() {
     Email: '',
     Password: '',
     ConfirmPassword: '',
-    ProfilePicture: '',
+    Profilepicture: '',
     PhoneNumber: '',
   };
 
@@ -77,7 +79,7 @@ function Register() {
     });
 
     const uploadedImgUrl = await res.json();
-    setUser({ ...user, ProfilePicture: uploadedImgUrl.url });
+    setUser({ ...user, Profilepicture: uploadedImgUrl.url });
   };
 
   const handleChange = (e) => {
@@ -101,123 +103,165 @@ function Register() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-black flex items-center justify-center">
       <Toaster toastOptions={{ duration: 3000 }} />
-      <form onSubmit={singUp}>
-        <div
-          className="max-w-md mx-auto p-8 shadow-lg rounded-lg"
-          style={{ backgroundColor: 'black', color: 'white' }}
-        >
-          <h2 className="text-2xl font-bold mb-6 text-center">Register here</h2>
+      <form
+        onSubmit={singUp}
+        className="bg-gray-800 p-8 rounded-lg shadow-lg w-10 max-w-sm flex flex-col items-center "
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div style={{ marginLeft: '120px' }}>
 
-          <TextField
-            label="Name"
-            name="Name"
-            variant="outlined"
-            fullWidth
-            className="mb-4"
-            value={user.Name}
-            onChange={handleChange}
-            error={!!err.Name}
-            helperText={err.Name}
-            InputProps={{
-              style: { backgroundColor: 'grey', color: 'white' },
-            }}
-          />
 
-          <TextField
-            label="Email"
-            type="email"
-            name="Email"
-            variant="outlined"
-            fullWidth
-            className="mb-4"
-            value={user.Email}
-            onChange={handleChange}
-            error={!!err.Email}
-            helperText={err.Email}
-            InputProps={{
-              style: { backgroundColor: 'grey', color: 'white' },
-            }}
-          />
-
-          <TextField
-            label="Password"
-            name="Password"
-            type="password"
-            variant="outlined"
-            fullWidth
-            className="mb-4"
-            value={user.Password}
-            onChange={handleChange}
-            error={!!err.Password}
-            helperText={err.Password}
-            InputProps={{
-              style: { backgroundColor: 'grey', color: 'white' },
-            }}
-          />
-
-          <TextField
-            label="Confirm Password"
-            name="ConfirmPassword"
-            type="password"
-            variant="outlined"
-            fullWidth
-            className="mb-4"
-            value={user.ConfirmPassword}
-            onChange={handleChange}
-            error={!!err.ConfirmPassword}
-            helperText={err.ConfirmPassword}
-            InputProps={{
-              style: { backgroundColor: 'grey', color: 'white' },
-            }}
-          />
-
-          <TextField
-            label="Phone Number"
-            name="PhoneNumber"
-            type="number"
-            variant="outlined"
-            fullWidth
-            className="mb-4"
-            value={user.PhoneNumber}
-            onChange={handleChange}
-            error={!!err.PhoneNumber}
-            helperText={err.PhoneNumber}
-            InputProps={{
-              style: { backgroundColor: 'grey', color: 'white' },
-            }}
-          />
-
-          <div className="flex flex-col items-center mb-6">
-            <img src={user.ProfilePicture} alt="Profile" className="mb-4" />
-            <input
-              accept="image/*"
-              style={{ display: 'none' }}
-              id="profile-pic-upload"
-              type="file"
-              name="ProfilePicture"
-              onChange={handleImageUpload}
-            />
-            <label htmlFor="profile-pic-upload">
-              <Button variant="contained" color="primary" component="span">
-                Add Profile Picture
-              </Button>
-            </label>
+            <h1 className="text-2xl font-bold mb-6 text-center text-white ">
+              HeyYou
+            </h1>
+            <p>Brings Your People Closer.....</p>
           </div>
 
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ backgroundColor: 'red', color: 'white' }}
-            fullWidth
-          >
-            Sign Up
-          </Button>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <img src='/images/heyYou.webp' height={500} style={{ marginLeft: '100px' }}></img>
+          <div style={{ display: 'flex', flexDirection: "column", position: 'absolute', left: '50%', width: '300px', marginRight: '300px' }}>
+            
+            <h2 className="text-2xl font-bold mb-6 text-center text-white">
+              Register here
+            </h2>
+            <TextField
+              label="Name"
+              name="Name"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: '16px' }} 
+              value={user.Name}
+              onChange={handleChange}
+              error={!!err.Name}
+              helperText={err.Name}
+              InputProps={{
+                style: { backgroundColor: 'white', color: 'black' }, 
+              }}
+              InputLabelProps={{
+                style: { color: 'black' }, 
+              }}
+            />
+
+            <TextField
+              label="Email"
+              type="email"
+              name="Email"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: '16px' }}
+              value={user.Email}
+              onChange={handleChange}
+              error={!!err.Email}
+              helperText={err.Email}
+              InputProps={{
+                style: { backgroundColor: 'white', color: 'black' },
+              }}
+              InputLabelProps={{
+                style: { color: 'black' },
+              }}
+            />
+
+            <TextField
+              label="Password"
+              name="Password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: '16px' }}
+              value={user.Password}
+              onChange={handleChange}
+              error={!!err.Password}
+              helperText={err.Password}
+              InputProps={{
+                style: { backgroundColor: 'white', color: 'black' },
+              }}
+              InputLabelProps={{
+                style: { color: 'black' },
+              }}
+            />
+
+            <TextField
+              label="Confirm Password"
+              name="ConfirmPassword"
+              type="password"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: '16px' }}
+              value={user.ConfirmPassword}
+              onChange={handleChange}
+              error={!!err.ConfirmPassword}
+              helperText={err.ConfirmPassword}
+              InputProps={{
+                style: { backgroundColor: 'white', color: 'black' },
+              }}
+              InputLabelProps={{
+                style: { color: 'black' },
+              }}
+            />
+
+            <TextField
+              label="Phone Number"
+              name="PhoneNumber"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: '16px' }}
+              value={user.PhoneNumber}
+              onChange={handleChange}
+              error={!!err.PhoneNumber}
+              helperText={err.PhoneNumber}
+              InputProps={{
+                style: { backgroundColor: 'white', color: 'black' },
+              }}
+              InputLabelProps={{
+                style: { color: 'black' },
+              }}
+            />
+
+<div style={{display:'flex', justifyContent:'space-between'}}>
+<div className="flex flex-col items-center mb-6">
+  {user.Profilepicture && (
+    <img
+      src={user.Profilepicture}
+      alt="Profile"
+      className="mb-4 rounded-[4px] object-cover" style={{height:'60px' , width:'60px' ,borderRadius:'50px'}}// Adjust width and height to smaller size
+    />
+  )}
+  <input
+    accept="image/*"
+    style={{ display: 'none' }}
+    id="profile-pic-upload"
+    type="file"
+    name="Profilepicture"
+    onChange={handleImageUpload}
+  />
+</div>
+<label htmlFor="profile-pic-upload">
+  <Button variant="contained"  component="span" style={{background:'gray'}}>
+    Add Profile Picture
+  </Button>
+</label>
+</div>
+
+
+            <Button
+              type="submit"
+              variant="contained"
+              style={{ backgroundColor: 'red', color: 'white', width: '300px', marginTop:'3px' }}
+              fullWidth m
+            >
+              Sign Up
+            </Button>
+            <p>Already have an account, please <Link to={'/login'} style={{ color: 'cyan' }}>Login</Link></p>
+
+          </div>
         </div>
       </form>
-    </>
+
+    </div>
   );
 }
 
-export default Register;
+export default Register; 

@@ -38,7 +38,7 @@ const ProfileModal = ({ user, children }) => {
         >
           <div
             style={{
-              background: 'white',
+              background: 'gray',
               padding: '20px',
               borderRadius: '8px',
               position: 'relative',
@@ -46,9 +46,9 @@ const ProfileModal = ({ user, children }) => {
               textAlign: 'center',
             }}
           >
-            <h2>{user.Name}</h2>
-            <img src={user.Profilepicture} alt="" />
-            <p>Email: {user?.Email || 'Not provided'}</p>
+            <h2 style={{color:'black'}}>{user.Name}</h2>
+            <img src={user.Profilepicture} alt="picture abhi baaki heii" className="mb-4 rounded-[4px] object-cover" style={{height:'60px' , width:'60px' ,borderRadius:'50px'}} />
+            <p style={{color:'black'}}>Email: {user?.Email || 'Not provided'}</p>
           
 
             <button

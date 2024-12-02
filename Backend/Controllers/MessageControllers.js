@@ -55,3 +55,43 @@ export const AllMessages=async(req,res)=>{
     
   }
 }
+
+
+export const unreadMessages=async(req,res)=>{
+  
+  
+     const userId=req.params.id
+     console.log('unreadddd..',userId);
+
+
+     try {
+     const unreadCount= await Message.aggregate([
+        {
+          $match : { readBy : {$ne:userId}}
+        },
+        {$lookup:{
+          from:'chats',
+          localField:"chat",
+          foreignField:'_id',
+
+          as:'chatInfo'
+        }
+      },{
+        $unwind:'$chatInfo'
+      },
+      {
+        $match:{'chatInfo.users':userId}
+      },
+  
+       ])
+       console.log(unreadCount,'unreadddd..');
+       
+       res.status(200).json(unreadCount)
+  }
+
+  catch (error) {
+    console.log(error);
+    
+   }
+     } 
+   

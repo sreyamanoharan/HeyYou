@@ -17,6 +17,8 @@ const ChatProvider=({children})=>{
         const token=localStorage.getItem('token')
 
         setUser(userInfo)
+        console.log('userInfooo');
+        
 
         if(!token){
             navigate('/login')

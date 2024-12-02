@@ -1,5 +1,7 @@
 
 export const getSender=(loggedUser,users)=>{
+    console.log(users,loggedUser,'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+    
     console.log(users[1].Name,loggedUser.Name,'user from getsenderrrrrr');
     
     return users[0]._id ===loggedUser._id ? users[1].Name:users[0].Name;

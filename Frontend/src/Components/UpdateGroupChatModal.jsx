@@ -22,7 +22,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchChats }) => {
     console.log('jjjjjookkkerrr');
     console.log(user,user1,'heyy wowwww ');
     
-    if(selectedChat.groupAdmin._id !==user._id&&user1._id ==user._id){
+    if(selectedChat.groupAdmin._id !==user._id&& user1._id !==user._id){
       console.log('only admin can remove someOne');
       return
       
@@ -54,7 +54,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchChats }) => {
 
     try {
       setRenameloading(true)
-      const {data}=await axios.put('/chat/rename-group',{chatId:selectedChat._id , chatName:groupChatName},    {headers: {
+      const {data}=await axios.put('/chat/rename-group',{chatId:selectedChat._id , chatName:groupChatName},{headers: {
         'Content-Type': 'application/json', // Specify Content-Type
       }})
 

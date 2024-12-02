@@ -147,8 +147,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             )}
 
             <form
-              onSubmit={(e) => e.preventDefault()} // Prevent form submission
-              onKeyDown={sendMessage} // Handle "Enter" key press
+              onSubmit={(e) => e.preventDefault()} 
+              onKeyDown={sendMessage} 
             >
               {isTyping && typingUser ? (
                 <div>

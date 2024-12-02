@@ -99,6 +99,8 @@ export const login=async(req,res)=>{
     
     await UserModel.findOne({Email:Email}).then((user)=>{
         if(user){
+            console.log(user,'&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+            
             if(user.Password===password){
                 res.status(201).json({user
                     ,token:generateToken(user._id)})
@@ -117,16 +119,9 @@ export const login=async(req,res)=>{
 }
 
 export const allUsers=async(req,res)=>{
-   
-    const keyword=req.query.search ? {
-        $or: [
-            {Name: { $regex: req.query.search ,$options:"i"}},
-            {Email:{ $regex: req.query.search ,$options:"i"}}
-        ]
-    }:{};
-  console.log(keyword);
+
   
- const users= await UserModel.find(keyword).find({_id:{$ne:req.user._id}})
+ const users= await UserModel.find({Name:{$regex:req.query.search ,$options:'i'}}).find({_id:{$ne:req.user._id}})
  console.log(users);
  
  res.send(users)

@@ -6,15 +6,16 @@ import GroupChatModal from './GroupChatModal';
 
 const MyChats = ({fetchAgain}) => {
 
-  const [loggedUser,setLoggedUser]=useState();
+  const [loggedUser,setLoggedUser]=useState('');
   const [modalOpen,setModalOpen]=useState(false)
   const {selectedChat,setSelectedChat,user,chats,setChats}=ChatState()
+  
 
 const fetchChats=async()=>{
-  try {
+  try { 
     const {data}=await axios.get('/chat/get-chat', 
       {headers: {
-      'Content-Type': 'application/json', // Specify Content-Type
+      'Content-Type': 'application/json', 
     }})
     console.log(data,'chatss are here onlyyyy');
     
@@ -52,8 +53,8 @@ const handleOpenModal = () => {
         {chats ? (
           chats.map((chat) => (
             <li onClick={() => setSelectedChat(chat)} key={chat._id}>
-             {!chat.isGroupChat
-                  ? getSender(loggedUser, chat.users)
+             {!chat.isGroupChat   
+                  ? (getSender(loggedUser, chat.users))
                 : chat.chatName}
             </li>
 
